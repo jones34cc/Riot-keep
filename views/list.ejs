@@ -10,7 +10,8 @@
 <body>
     <div class="container">
         <div class="valorant-header">
-            <h1 class="app-title">Tactical Task Manager</h1>
+            <h1><%=kindOfDay%></h1>
+            <h2 class="app-title">Tactical Task Manager</h2>
             <div class="radiant-line"></div>
         </div>
         
@@ -29,13 +30,42 @@
             </form>
 
             <ul class="todo-list">
-                <% for(let i = 0; i < tasks.length; i++) { %>
-                    <li class="todo-item">
+                <% tasks.forEach(task => { %>
+                    <li class="todo-item" id="task-<%= task._id %>">
                         <div class="radianite-glow"></div>
-                        <span class="task-text"><%= tasks[i] %></span>
+                        <span class="task-text"><%= task.name %></span>
+                        <button class="delete-btn" onclick="deleteTask('<%= task._id %>')">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </li>
-                <% } %>
+                <% }); %>
             </ul>
+            
+            <script>
+                function deleteTask(taskId) {
+                    const taskElement = document.getElementById(`task-${taskId}`);
+                    
+                    // Add vibration effect
+                    taskElement.classList.add("shake");
+            
+                    // Wait for vibration, then fade out
+                    setTimeout(() => {
+                        taskElement.classList.add("fade-out");
+                        setTimeout(() => {
+                            fetch("/delete", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ taskId })
+                            })
+                            .then(() => {
+                                taskElement.remove();
+                            })
+                            .catch(err => console.error("Error deleting task:", err));
+                        }, 500); // Wait for fade-out animation
+                    }, 500); // Wait for shake animation
+                }
+            </script>
+            
         </div>
     </div>
 </body>

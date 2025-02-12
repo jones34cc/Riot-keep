@@ -10,11 +10,11 @@
 
 body {
     font-family: 'Rajdhani', sans-serif;
-    background: url('/images/glow-hand.gif') no-repeat center center fixed;
+    background: url('/images/7432246.jpg') no-repeat center center fixed;
     background-size: cover;
     background-blend-mode: overlay;
     color: var(--light-gray);
-    display: flex;
+    display: flex; 
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -138,3 +138,27 @@ body::before {
     color: var(--secondary-color);
     transform: scale(1.2);
 }
+/* Shake animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+}
+.shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Fade-out and line-through animation */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+.fade-out .task-text {
+    text-decoration: line-through;
+    color: rgba(236, 232, 225, 0.5);
+}
+
